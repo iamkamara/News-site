@@ -1,17 +1,49 @@
-import React from 'react';
-import ReactDOM from 'react-dom/client';
-import './index.css';
-import App from './App';
-import reportWebVitals from './reportWebVitals';
+// Get the latest news articles
+const latestArticles = document.querySelectorAll('main section article');
 
-const root = ReactDOM.createRoot(document.getElementById('root'));
-root.render(
-  <React.StrictMode>
-    <App />
-  </React.StrictMode>
-);
+// Add click event listener to each article
+latestArticles.forEach(article => {
+  article.addEventListener('click', () => {
+    // Get the article title and content
+    const title = article.querySelector('h3').textContent;
+    const content = article.querySelector('p').textContent;
+    
+    // Display the article in a modal
+    showModal(title, content);
+  });
+});
 
-// If you want to start measuring performance in your app, pass a function
-// to log results (for example: reportWebVitals(console.log))
-// or send to an analytics endpoint. Learn more: https://bit.ly/CRA-vitals
-reportWebVitals();
+// Function to display a modal with the article content
+function showModal(title, content) {
+  // Create modal elements
+  const modal = document.createElement('div');
+  const modalContent = document.createElement('div');
+  const modalTitle = document.createElement('h3');
+  const modalClose = document.createElement('button');
+  const modalBody = document.createElement('p');
+  
+  // Add content to modal elements
+  modalTitle.textContent = title;
+  modalClose.textContent = 'Close';
+  modalBody.textContent = content;
+  
+  // Add classes to modal elements
+  modal.classList.add('modal');
+  modalContent.classList.add('modal-content');
+  modalTitle.classList.add('modal-title');
+  modalClose.classList.add('modal-close');
+  modalBody.classList.add('modal-body');
+  
+  // Append modal elements to the page
+  modalContent.appendChild(modalTitle);
+  modalContent.appendChild(modalClose);
+  modalContent.appendChild(modalBody);
+  modal.appendChild(modalContent);
+  document.body.appendChild(modal);
+  
+  // Add click event listener to close button
+  modalClose.addEventListener('click', () => {
+    document.body.removeChild(modal);
+  });
+}
+
